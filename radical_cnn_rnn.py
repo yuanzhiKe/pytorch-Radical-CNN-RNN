@@ -48,12 +48,23 @@ class RadicalCNN(nn.module):
             ('activation', torch.nn.ReLU()),  # maybe can try Leaky, PReLU or RReLU
             ('maxpooling', nn.MaxPool1d(kernel_size=max_word_length - 2))
         ]))
+        self.highway = Highway(input_dim=12*basic_filter_dim, activation_function=nn.ReLU)
 
     def forward(self, x):
         #x shape: [max_sent_length, max_word_length * max_character_length]
         radical_embedding_representations = self.radical_emb_lookup(x)
         radical_feature1 = self.radical_level_filter1(radical_embedding_representations)
-        pass
+        radical_feature2 = self.radical_level_filter2(radical_embedding_representations)
+        radical_feature3 = self.radical_level_filter3(radical_embedding_representations)
+        character_feature1 = self.char_level_filter1(radical_embedding_representations)
+        character_feature2 = self.char_level_filter2(radical_embedding_representations)
+        character_feature3 = self.char_level_filter3(radical_embedding_representations)
+        # concatenate the outputs of filters
+        word_features = torch.cat((radical_feature1, radical_feature2, radical_feature3, character_feature1, character_feature2, character_feature3), dim=1)
+        # flatten the outputs of each word
+        word_features = word_features.view(x[0], -1)
+        output = self.highway(word_features)
+        return output
 
 
 class TextRNN(nn.module):
