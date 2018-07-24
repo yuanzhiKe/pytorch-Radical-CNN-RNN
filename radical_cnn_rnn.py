@@ -63,7 +63,7 @@ class RadicalCNN(nn.module):
         word_features = torch.cat((radical_feature1, radical_feature2, radical_feature3, character_feature1, character_feature2, character_feature3), dim=1)
         # flatten the outputs of each word
         word_features = word_features.view(x[0], -1)
-        output = self.highway(word_features)
+        output = self.highway.forward(word_features)
         return output
 
 
