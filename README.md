@@ -23,12 +23,3 @@ We used CHISE: http://www.chise.org/ids/
   publisher={The Japanese Society for Artificial Intelligence}
 }
 ```
-```
-@inproceedings{karpinska2018subcharacter,
-  title={Subcharacter Information in Japanese Embeddings: When Is It Worth It?},
-  author={Karpinska, Marzena and Li, Bofang and Rogers, Anna and Drozd, Aleksandr},
-  booktitle={Proceedings of the Workshop on the Relevance of Linguistic Structure in Neural Architectures for NLP},
-  pages={28--37},
-  year={2018}
-}
-```
